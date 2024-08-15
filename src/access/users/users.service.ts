@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {UserEntity} from "./entity/user.entity";
-import {Repository} from "typeorm";
+import {FindOptionsWhere, Repository} from "typeorm";
 import {SignupDto} from "../auth/dto/signup.dto";
 
 @Injectable()
@@ -21,6 +21,12 @@ export class UsersService {
         userEntity.username = singUpDto.email;
         userEntity.password = singUpDto.password;
         return this.usersRepository.save(userEntity);
+    }
+
+    async findOne(whereOptions: FindOptionsWhere<UserEntity>): Promise<UserEntity> {
+        return this.usersRepository.findOne({
+            where: whereOptions
+        })
     }
 
 }
