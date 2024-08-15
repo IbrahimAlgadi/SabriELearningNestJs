@@ -7,12 +7,15 @@ import {UsersService} from "../users/users.service";
 import {PasswordHasherService} from "./password-hasher/password-hasher.service";
 import {JwtModule} from "@nestjs/jwt";
 import {jwtConstants} from "../../common/constants";
+import {PassportModule} from "@nestjs/passport";
+import { JwtStrategyService } from './jwt-strategy/jwt-strategy.service';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([
             UserEntity
         ]),
+        PassportModule,
         JwtModule.register({
             global: true,
             secret: jwtConstants.secret,
@@ -20,7 +23,8 @@ import {jwtConstants} from "../../common/constants";
         }),
     ],
     controllers: [AuthController],
-    providers: [AuthService, UsersService, PasswordHasherService]
+    providers: [AuthService, UsersService, PasswordHasherService, JwtStrategyService],
+    exports: [AuthService]
 })
 export class AuthModule {
 }

@@ -1,3 +1,5 @@
+### Authenticate
+
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
@@ -6,7 +8,7 @@ Content-Type: application/json
   "password": "HonestMan@1996"
 }
 
-###
+### Access Authroized Route
 
 GET http://localhost:3000/auth/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsInVzZXJuYW1lIjoiaGVtYTMuZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIzNzUzNTM2LCJleHAiOjE3MjM3NTM1OTZ9.vW4GGMphaAkmJxN8KcDNmD6Hxu_0FnH-z66zUxIZGJY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJoZW1hMy5lbWFpbEBnbWFpbC5jb20iLCJpYXQiOjE3MjM3NTcwOTksImV4cCI6MTcyMzc1NzE1OX0.furYrPQmFema085UGjqstUs_qFvuvZvjiITHrSVbF54

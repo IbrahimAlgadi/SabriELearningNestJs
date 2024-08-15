@@ -29,4 +29,12 @@ export class UsersService {
         })
     }
 
+    async updateLastLogin(user: UserEntity): Promise<UserEntity> {
+        this.usersRepository.merge(user, {
+            lastLogin: new Date()
+        });
+        // console.log(user);
+        return this.usersRepository.save(user);
+    }
+
 }

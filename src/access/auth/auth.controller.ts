@@ -2,7 +2,9 @@ import {Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards, Request} f
 import {SignupDto} from "./dto/signup.dto";
 import {AuthService} from "./auth.service";
 import {LoginDto} from "./dto/login.dto";
-import {AuthGuard} from "./guard/auth.guard";
+// import {AuthGuard} from "@nestjs/passport";
+import {JwtAuthGuard} from "./guard/jwt-auth.guard";
+// import {AuthGuard} from "./guard/auth.guard";
 
 @Controller('auth')
 export class AuthController {
@@ -22,7 +24,8 @@ export class AuthController {
         return this.authService.login(loginDto);
     }
 
-    @UseGuards(AuthGuard)
+    // @UseGuards(AuthGuard)
+    @UseGuards(JwtAuthGuard)
     @Get('profile')
     getProfile(@Request() req) {
         return req.user;

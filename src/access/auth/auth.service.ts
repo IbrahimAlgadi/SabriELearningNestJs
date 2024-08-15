@@ -45,8 +45,11 @@ export class AuthService {
             throw new UnauthorizedException(`Invalid Login`);
         }
 
+        // update last login for the user
+        user = await this.usersService.updateLastLogin(user);
+
         // generate jwt token
-        const payload = { sub: user.id, username: user.username };
+        const payload = { id: user.id, email: user.email };
         return {
           access_token: await this.jwtService.signAsync(payload),
         }
