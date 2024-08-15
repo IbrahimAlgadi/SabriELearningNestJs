@@ -8,4 +8,8 @@ export class PasswordHasherService {
         return bcrypt.hash(toBeHashed, 10);
     }
 
+    async comparePasswordHash(plainPassword: string, userPassword: string): Promise<boolean> {
+        return await bcrypt.compare(plainPassword, userPassword);
+    }
+
 }

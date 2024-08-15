@@ -1,0 +1,12 @@
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "hema3.email@gmail.com",
+  "password": "HonestMan@1996"
+}
+
+###
+
+GET http://localhost:3000/auth/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsInVzZXJuYW1lIjoiaGVtYTMuZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIzNzUzNTM2LCJleHAiOjE3MjM3NTM1OTZ9.vW4GGMphaAkmJxN8KcDNmD6Hxu_0FnH-z66zUxIZGJY
