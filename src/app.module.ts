@@ -1,17 +1,47 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UsersModule } from './users/users.module';
-import { InstructorsModule } from './e_learning/instructors/instructors.module';
-import { InstitutesModule } from './e_learning/institutes/institutes.module';
-import { StudentsModule } from './e_learning/students/students.module';
-import { EnrollmentsModule } from './access/enrollments/enrollments.module';
-import { OrdersModule } from './access/orders/orders.module';
-import { TransactionsModule } from './access/transactions/transactions.module';
+import {Module} from '@nestjs/common';
+import {AppController} from './app.controller';
+import {AppService} from './app.service';
+import {UsersModule} from './access/users/users.module';
+import {EnrollmentsModule} from './sales/enrollments/enrollments.module';
+import {OrdersModule} from './sales/orders/orders.module';
+import {TransactionsModule} from './sales/transactions/transactions.module';
+import {TypeOrmModule} from "@nestjs/typeorm";
+import {InstructorsModule} from "./institutes/instructors/instructors.module";
+import {InstitutesModule} from "./institutes/institutes.module";
+import {StudentsModule} from "./institutes/students/students.module";
+import {Connection} from "typeorm";
+import { PasswordHasherService } from './access/auth/password-hasher/password-hasher.service';
+import { AuthModule } from './access/auth/auth.module';
 
 @Module({
-  imports: [UsersModule, InstructorsModule, InstitutesModule, StudentsModule, EnrollmentsModule, OrdersModule, TransactionsModule],
-  controllers: [AppController],
-  providers: [AppService],
+    imports: [
+        TypeOrmModule.forRoot({
+            type: 'mysql',
+            host: 'localhost',
+            port: 3306,
+            username: 'root',
+            password: '',
+            database: 'e_learning',
+            entities: [__dirname + "/**/*.entity{.ts,.js}"],
+            // synchronize: false,
+            synchronize: true,
+        }),
+        UsersModule,
+        InstructorsModule,
+        InstitutesModule,
+        StudentsModule,
+        EnrollmentsModule,
+        OrdersModule,
+        TransactionsModule,
+        AuthModule
+    ],
+    controllers: [AppController],
+    providers: [AppService, PasswordHasherService],
 })
-export class AppModule {}
+export class AppModule {
+
+    constructor(private readonly connection: Connection) {
+        console.log("Connection Status: ", connection.isConnected)
+    }
+
+}
