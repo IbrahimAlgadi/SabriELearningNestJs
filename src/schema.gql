@@ -1,0 +1,237 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+}
+
+type UserDeleteResponse {
+  id: ID
+  firstName: String
+  lastName: String
+  email: String
+}
+
+type UserEdge {
+  """The node containing the User"""
+  node: User!
+
+  """Cursor for this node."""
+  cursor: ConnectionCursor!
+}
+
+"""Cursor for paging through collections"""
+scalar ConnectionCursor
+
+type PageInfo {
+  """true if paging forward and there are more records."""
+  hasNextPage: Boolean
+
+  """true if paging backwards and there are more records."""
+  hasPreviousPage: Boolean
+
+  """The cursor of the first returned record."""
+  startCursor: ConnectionCursor
+
+  """The cursor of the last returned record."""
+  endCursor: ConnectionCursor
+}
+
+type UserConnection {
+  """Paging information"""
+  pageInfo: PageInfo!
+
+  """Array of edges."""
+  edges: [UserEdge!]!
+}
+
+type UserAggregateGroupBy {
+  id: ID
+  firstName: String
+  lastName: String
+  email: String
+}
+
+type UserCountAggregate {
+  id: Int
+  firstName: Int
+  lastName: Int
+  email: Int
+}
+
+type UserSumAggregate {
+  id: Float
+}
+
+type UserAvgAggregate {
+  id: Float
+}
+
+type UserMinAggregate {
+  id: ID
+  firstName: String
+  lastName: String
+  email: String
+}
+
+type UserMaxAggregate {
+  id: ID
+  firstName: String
+  lastName: String
+  email: String
+}
+
+type SignupOutputDto {
+  message: String!
+  email: String!
+}
+
+type Query {
+  user(
+    """The id of the record to find."""
+    id: ID!
+  ): User
+  users(
+    """Limit or page results."""
+    paging: CursorPaging! = {first: 10}
+
+    """Specify to filter the records returned."""
+    filter: UserFilter! = {}
+
+    """Specify to sort results."""
+    sorting: [UserSort!]! = []
+  ): UserConnection!
+}
+
+input CursorPaging {
+  """Paginate before opaque cursor"""
+  before: ConnectionCursor
+
+  """Paginate after opaque cursor"""
+  after: ConnectionCursor
+
+  """Paginate first"""
+  first: Int
+
+  """Paginate last"""
+  last: Int
+}
+
+input UserFilter {
+  and: [UserFilter!]
+  or: [UserFilter!]
+  id: IDFilterComparison
+  firstName: StringFieldComparison
+  lastName: StringFieldComparison
+  email: StringFieldComparison
+}
+
+input IDFilterComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: ID
+  neq: ID
+  gt: ID
+  gte: ID
+  lt: ID
+  lte: ID
+  like: ID
+  notLike: ID
+  iLike: ID
+  notILike: ID
+  in: [ID!]
+  notIn: [ID!]
+}
+
+input StringFieldComparison {
+  is: Boolean
+  isNot: Boolean
+  eq: String
+  neq: String
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  like: String
+  notLike: String
+  iLike: String
+  notILike: String
+  in: [String!]
+  notIn: [String!]
+}
+
+input UserSort {
+  field: UserSortFields!
+  direction: SortDirection!
+  nulls: SortNulls
+}
+
+enum UserSortFields {
+  id
+  firstName
+  lastName
+  email
+}
+
+"""Sort Directions"""
+enum SortDirection {
+  ASC
+  DESC
+}
+
+"""Sort Nulls Options"""
+enum SortNulls {
+  NULLS_FIRST
+  NULLS_LAST
+}
+
+type Mutation {
+  createOneUser(input: CreateOneUserInput!): User!
+  updateOneUser(input: UpdateOneUserInput!): User!
+  deleteOneUser(input: DeleteOneUserInput!): UserDeleteResponse!
+  register(singUpInput: SignupInputDto!): SignupOutputDto!
+}
+
+input CreateOneUserInput {
+  """The record to create"""
+  user: CreateUserInput!
+}
+
+input CreateUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+}
+
+input UpdateOneUserInput {
+  """The id of the record to update"""
+  id: ID!
+
+  """The update to apply."""
+  update: UpdateUserInput!
+}
+
+input UpdateUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+}
+
+input DeleteOneUserInput {
+  """The id of the record to delete."""
+  id: ID!
+}
+
+input SignupInputDto {
+  firstName: String!
+  lastName: String!
+  username: String!
+  email: String!
+  password: String!
+}

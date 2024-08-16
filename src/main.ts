@@ -2,6 +2,8 @@ import {NestFactory} from '@nestjs/core';
 import {AppModule} from './app.module';
 import {ValidationPipe} from "@nestjs/common";
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
+import * as expressGraphiQL from 'express-graphiql';
+
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule, {cors: true});
@@ -14,8 +16,11 @@ async function bootstrap() {
         .addTag('e_learning')
         .addBearerAuth()
         .build();
+
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('swagger', app, document);
+
+    // app.use('/voyager', voyagerMiddleware({ endpointUrl: '/graphql' }));
 
     await app.listen(3000);
 }

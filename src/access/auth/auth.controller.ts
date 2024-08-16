@@ -8,7 +8,7 @@ import {
     UseGuards,
     Request,
     UseInterceptors,
-    ClassSerializerInterceptor
+    ClassSerializerInterceptor,
 } from '@nestjs/common';
 import {SignupDto} from "./dto/signup.dto";
 import {AuthService} from "./auth.service";
@@ -28,11 +28,11 @@ export class AuthController {
     constructor(private readonly authService: AuthService) {
     }
 
-    @ApiCreatedResponse({ description: 'User created successfully.'})
-    @ApiResponse({ status: 403, description: 'Forbidden.'})
+    @ApiCreatedResponse({description: 'User created successfully.'})
+    @ApiResponse({status: 403, description: 'Forbidden.'})
     @ApiBody({
-      description: 'Sign Up user',
-      type: SignupDto,
+        description: 'Sign Up user',
+        type: SignupDto,
     })
     @HttpCode(HttpStatus.CREATED)
     @Post('signup')
@@ -40,11 +40,11 @@ export class AuthController {
         return this.authService.signUp(signupDto);
     }
 
-    @ApiOkResponse({ description: 'User logged in successfully.'})
-    @ApiResponse({ status: 403, description: 'Forbidden.'})
+    @ApiOkResponse({description: 'User logged in successfully.'})
+    @ApiResponse({status: 403, description: 'Forbidden.'})
     @ApiBody({
-      description: 'Login user',
-      type: LoginDto,
+        description: 'Login user',
+        type: LoginDto,
     })
     @HttpCode(HttpStatus.OK)
     @Post('login')

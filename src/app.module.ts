@@ -1,4 +1,4 @@
-import {Module} from '@nestjs/common';
+import {MiddlewareConsumer, NestModule, Module} from '@nestjs/common';
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
 import {UsersModule} from './access/users/users.module';
@@ -16,6 +16,11 @@ import {TasksModule} from './tasks/tasks.module';
 import {ScheduleModule} from "@nestjs/schedule";
 import {GraphQLModule} from "@nestjs/graphql";
 import {ApolloDriver, ApolloDriverConfig} from "@nestjs/apollo";
+// import * as express from 'express';
+// import * as expressGraphiQL from 'express-graphiql';
+import { join } from 'path';
+import { GraphqlPlaygroundModule } from './graphql-playground/graphql-playground.module';
+
 
 @Module({
     imports: [
@@ -36,8 +41,13 @@ import {ApolloDriver, ApolloDriverConfig} from "@nestjs/apollo";
         // }),
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
+            autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
             playground: true,
-            autoSchemaFile: true,
+            csrfPrevention: false,
+            introspection: true,
+            // autoSchemaFile: true,
+            // graphiql: true,
+            // plugins: [ApolloServerPluginLandingPageLocalDefault()]
         }),
         ScheduleModule.forRoot(),
         UsersModule,
@@ -48,15 +58,29 @@ import {ApolloDriver, ApolloDriverConfig} from "@nestjs/apollo";
         OrdersModule,
         TransactionsModule,
         AuthModule,
-        TasksModule
+        TasksModule,
+        GraphqlPlaygroundModule
     ],
     controllers: [AppController],
     providers: [AppService, PasswordHasherService],
 })
 export class AppModule {
 
-    constructor(private readonly connection: Connection) {
-        console.log("Connection Status: ", connection.isConnected)
+    // configure(consumer: MiddlewareConsumer) {
+    //     consumer
+    //         .apply(
+    //             expressGraphiQL({
+    //                 endpointURL: '/graphql', // same as GraphQLModule path
+    //             }),
+    //         )
+    //         .forRoutes('/graphiql');
+    // }
+
+    constructor(
+        private readonly connection: Connection,
+        // private readonly consumer: MiddlewareConsumer,
+    ) {
+        console.log("Connection Status: ", connection.isConnected);
     }
 
 }
