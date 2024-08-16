@@ -9,6 +9,9 @@ export class UserEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
+    // @Column()
+    // profileImage: string;
+
     @Column()
     firstName: string;
 
@@ -50,7 +53,7 @@ export class UserEntity {
 
     // @BeforeInsert()
     // async hashPassword() {
-    //     this.password = await bcrypt.hash(this.password, 10);
+    //     this.username = this.email;
     // }
 
     // constructor(partial: Partial<UserEntity>) {

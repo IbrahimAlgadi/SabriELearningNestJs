@@ -10,10 +10,12 @@ import {InstructorsModule} from "./institutes/instructors/instructors.module";
 import {InstitutesModule} from "./institutes/institutes.module";
 import {StudentsModule} from "./institutes/students/students.module";
 import {Connection} from "typeorm";
-import { PasswordHasherService } from './access/auth/password-hasher/password-hasher.service';
-import { AuthModule } from './access/auth/auth.module';
-import { TasksModule } from './tasks/tasks.module';
+import {PasswordHasherService} from './access/auth/password-hasher/password-hasher.service';
+import {AuthModule} from './access/auth/auth.module';
+import {TasksModule} from './tasks/tasks.module';
 import {ScheduleModule} from "@nestjs/schedule";
+import {GraphQLModule} from "@nestjs/graphql";
+import {ApolloDriver, ApolloDriverConfig} from "@nestjs/apollo";
 
 @Module({
     imports: [
@@ -27,6 +29,15 @@ import {ScheduleModule} from "@nestjs/schedule";
             entities: [__dirname + "/**/*.entity{.ts,.js}"],
             // synchronize: false,
             synchronize: true,
+        }),
+        // GraphQLModule.forRoot({
+        //     // set to true to automatically generate schema
+        //     autoSchemaFile: true,
+        // }),
+        GraphQLModule.forRoot<ApolloDriverConfig>({
+            driver: ApolloDriver,
+            playground: true,
+            autoSchemaFile: true,
         }),
         ScheduleModule.forRoot(),
         UsersModule,
