@@ -4,6 +4,8 @@ import {UsersService} from "../users/users.service";
 import {PasswordHasherService} from "./password-hasher/password-hasher.service";
 import {LoginDto} from "./dto/login.dto";
 import {JwtService} from "@nestjs/jwt";
+import {LoginResponse} from "./interface/login-response.interface";
+import {SignupResponse} from "./interface/signup-response.interface";
 
 @Injectable()
 export class AuthService {
@@ -15,21 +17,25 @@ export class AuthService {
     ) {
     }
 
-    async signUp(singUpDto: SignupDto): Promise<any> {
-        let user = this.usersService.findOne({
+    async signUp(singUpDto: SignupDto): Promise<SignupResponse> {
+        let existingUser = await this.usersService.findOne({
             email: singUpDto.email
         });
-        if (user) {
-            throw new UnauthorizedException(`Email ${singUpDto.email} is already taken, use another one.`);
+        if (existingUser) {
+            throw new UnauthorizedException(`Email ${existingUser.email} is already taken, use another one.`);
         }
         singUpDto.password = await this.passwordHasherService.generateHash(singUpDto.password);
         // username is the same as the email for this version
         singUpDto.username = singUpDto.email;
-        return this.usersService.registerUser(singUpDto);
+        let user = await this.usersService.registerUser(singUpDto);
+        return {
+            email: user.email,
+            message: "Sign up was successful"
+        };
     }
 
 
-    async login(loginDto: LoginDto): Promise<any> {
+    async login(loginDto: LoginDto): Promise<LoginResponse> {
 
         // check user in database
         let user = await this.usersService.findOne({
@@ -51,7 +57,7 @@ export class AuthService {
         // generate jwt token
         const payload = { id: user.id, email: user.email };
         return {
-          access_token: await this.jwtService.signAsync(payload),
+          accessToken: await this.jwtService.signAsync(payload),
         }
         // return user;
     }

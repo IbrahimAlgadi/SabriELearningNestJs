@@ -1,4 +1,5 @@
 import {BeforeInsert, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Exclude, Expose} from "class-transformer";
 // import { IsEmail, Length } from 'class-validator';
 // import bcrypt from 'bcrypt';
 
@@ -20,21 +21,27 @@ export class UserEntity {
     @Column({ type: 'varchar', length: 255, nullable: false, unique: true })
     email: string;
 
+    @Exclude()
     @Column({ type: 'varchar' })
     password: string;
 
+    @Exclude()
     @Column({ type: 'boolean', default: false })
     isStaff: boolean;
 
+    @Exclude()
     @Column({ type: 'boolean', default: false })
     isSuperuser: boolean;
 
+    @Exclude()
     @Column({ type: 'boolean', default: true })
     isActive: boolean;
 
+    @Exclude()
     @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
     dateJoined: Date;
 
+    @Exclude()
     @Column({ type: 'datetime', nullable: true })
     lastLogin: Date;
 
@@ -46,17 +53,18 @@ export class UserEntity {
     //     this.password = await bcrypt.hash(this.password, 10);
     // }
 
+    // constructor(partial: Partial<UserEntity>) {
+    //     Object.assign(this, partial)
+    // }
+
     clean() {
         this.email = this.normalizeEmail(this.email);
     }
 
-    getFullName(): string {
+    @Expose()
+    fullName(): string {
         const fullName = `${this.firstName} ${this.lastName}`;
         return fullName.trim();
-    }
-
-    getShortName(): string {
-        return this.firstName;
     }
 
     emailUser(subject: string, message: string, fromEmail?: string) {

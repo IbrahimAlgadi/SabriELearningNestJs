@@ -1,0 +1,4 @@
+### Access Authroized Route
+
+GET http://localhost:3000/auth/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJoZW1hMy5lbWFpbEBnbWFpbC5jb20iLCJpYXQiOjE3MjM4MDY3NTR9.5dYMsoWNLI1TYVJ_zpnzEktfAGqWmTOkiOuL8tme0pk

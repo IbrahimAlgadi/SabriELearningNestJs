@@ -12,6 +12,8 @@ import {StudentsModule} from "./institutes/students/students.module";
 import {Connection} from "typeorm";
 import { PasswordHasherService } from './access/auth/password-hasher/password-hasher.service';
 import { AuthModule } from './access/auth/auth.module';
+import { TasksModule } from './tasks/tasks.module';
+import {ScheduleModule} from "@nestjs/schedule";
 
 @Module({
     imports: [
@@ -26,6 +28,7 @@ import { AuthModule } from './access/auth/auth.module';
             // synchronize: false,
             synchronize: true,
         }),
+        ScheduleModule.forRoot(),
         UsersModule,
         InstructorsModule,
         InstitutesModule,
@@ -33,7 +36,8 @@ import { AuthModule } from './access/auth/auth.module';
         EnrollmentsModule,
         OrdersModule,
         TransactionsModule,
-        AuthModule
+        AuthModule,
+        TasksModule
     ],
     controllers: [AppController],
     providers: [AppService, PasswordHasherService],
